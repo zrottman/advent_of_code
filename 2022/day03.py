@@ -4,7 +4,7 @@ items = {c:i+1 for i, c in enumerate(list(alpha))}
 # PART 1
 score = 0
 
-with open('input', 'r') as f:
+with open('data/day03_data', 'r') as f:
     while (line := f.readline().strip()):
         left = set()
         length = len(line)
@@ -26,7 +26,7 @@ score = 0
 trio = [None] * 3
 count = 0
         
-with open('input', 'r') as f:
+with open('data/day03_data', 'r') as f:
     while (line := f.readline().strip()):
         trio[count % 3] = set()
         for char in line:

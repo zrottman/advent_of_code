@@ -1,6 +1,6 @@
 data = []
 
-with open('input', 'r') as f:
+with open('data/day01_data', 'r') as f:
     while (line := f.readline()):
         data.append(line.strip())
 

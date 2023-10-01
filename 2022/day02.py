@@ -38,7 +38,7 @@ key_two = {
 
 score_one = score_two = 0
 
-with open('input', 'r') as f:
+with open('data/day02_data', 'r') as f:
     while (line := f.readline()):
         you, me = line.split()
         score_one += key_one[you][me]

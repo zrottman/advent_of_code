@@ -1,7 +1,7 @@
 full_overlap = 0
 partial_overlap = 0
 
-with open("input", "r") as f:
+with open("data/day04_data", "r") as f:
     while (line := f.readline().strip()):
         one, two = line.split(',')
         one_low, one_high = one.split('-')
