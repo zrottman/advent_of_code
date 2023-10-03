@@ -87,7 +87,11 @@ class Parser:
         self.path = []
         self.data = open("data/day07_data", "r")
         self.root = None
-        self.parse()
+        self.part_one = MaxHeap()
+        self.part_two = MaxHeap()
+
+        self.parse() # parse file tree
+        self.audit_memory(self.root) # recursively talley memory
 
     def advance(self):
         return self.data.readline().strip()
@@ -150,33 +154,23 @@ class Parser:
     def close(self):
         self.data.close()
 
-part_one = MaxHeap()
-part_two = MaxHeap()
-def count_memory(root):
-    if not root:
-        return 0
-    for child in root.children:
-        root.size += count_memory(child)
-    if len(root.children) > 0: # a directory
-        part_two.insert(root)
-        if root.size < 100000:
-            part_one.insert(root)
-    return root.size
-
-def free_memory(root):
-    pass
-    
-
+    def audit_memory(self, root):
+        if not root:
+            return 0
+        for child in root.children:
+            root.size += self.audit_memory(child)
+        if len(root.children) > 0: # a directory
+            self.part_two.insert(root)
+            if root.size < 100000:
+                self.part_one.insert(root)
+        return root.size
 
 
 parser = Parser() 
-count_memory(parser.root)
-#parser.root.display()
 
-
-# Part 1
+# PART 1
 part_one_total = 0
-while (polled := part_one.poll()):
+while (polled := parser.part_one.poll()):
     part_one_total += polled.size
     #print("{}: {}".format(polled.name, polled.size))
 
@@ -185,12 +179,12 @@ print(part_one_total)
 print()
 
 
-# Part 2
-mem_used = part_two.poll().size
+# PART 2
+mem_used = parser.part_two.poll().size
 mem_avail = 70000000 - mem_used
 mem_needed = 30000000 - mem_avail
 
-while (polled := part_two.poll()) and polled.size > mem_needed:
+while (polled := parser.part_two.poll()) and polled.size > mem_needed:
     candidate = polled
 
 print(f"Part 2: Directory to delete to free 30000000")
